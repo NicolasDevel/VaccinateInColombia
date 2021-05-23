@@ -2,6 +2,7 @@
 
 namespace App\Console\Commands;
 
+use App\Models\Vaccinate;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Storage;
 
@@ -38,8 +39,23 @@ class FillDataBaseTask extends Command
      */
     public function handle()
     {
-        $texto = 'Hola joder sot nicolas'.Date("Y-m-d H:i:s");
-        Storage::append("archivo.txt",$texto);
+        Storage::append("archivo.txt",Vaccinate::all()->count());
+        $data = file_get_contents(env('API_ENDPOINT'));
+        $vaccinate = json_decode($data, true);
+        $position = array_search('COL',array_column($vaccinate,'iso_code'));
+        if(Vaccinate::all()->count()===0){
+            foreach ( $vaccinate[$position]['data'] as $item){
+                Vaccinate::create($item);
+            }
+        }
+        else{
+            $length = count($vaccinate[$position]['data'])-1;
+            $lastRecordInDataBase = Vaccinate::all()->sortByDesc('id')->take(1)->toArray()[$length-1];
+            $lastRecordJson = $vaccinate[$position]['data'][$length];
+            if($lastRecordInDataBase['date'] !== $lastRecordJson['date']){
+                Vaccinate::create($lastRecordJson);
+            }
+        }
         return 0;
     }
 }
