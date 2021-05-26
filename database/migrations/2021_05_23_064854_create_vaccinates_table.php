@@ -19,6 +19,7 @@ class CreateVaccinatesTable extends Migration
             $table->integer('total_vaccinations')->nullable();
             $table->integer('people_vaccinated')->nullable();
             $table->integer('people_fully_vaccinated')->nullable();
+            $table->integer('daily_vaccinations')->nullable();
             $table->integer('daily_vaccinations_raw')->nullable();
             $table->double('total_vaccinations_per_hundred')->nullable();
             $table->double('people_vaccinated_per_hundred')->nullable();

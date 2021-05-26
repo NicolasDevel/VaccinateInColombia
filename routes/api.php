@@ -15,3 +15,6 @@ use \App\Http\Controllers\VaccinateController;
 */
 
 Route::get('vaccinate',[VaccinateController::class,'index']);
+Route::get('peopleFullVaccinate',[VaccinateController::class,'getFullVaccinate']);
+Route::get('peopleTotalVaccinate',[VaccinateController::class,'getTotalVaccinate']);
+Route::get('dailyVaccinates',[VaccinateController::class,'getDailyVaccinate']);

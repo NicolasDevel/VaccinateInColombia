@@ -25,7 +25,7 @@ class Kernel extends ConsoleKernel
     protected function schedule(Schedule $schedule)
     {
 //        $schedule->command('fillDataBase:task')->dailyAt('10:00');
-        $schedule->command('fill:task')->everyTwoMinutes();;
+        $schedule->command('fill:task')->everyMinute();;
     }
 
     /**
